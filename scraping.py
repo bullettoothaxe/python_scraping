@@ -53,13 +53,15 @@ def parse_good(good):
     title = good.find(class_=title_selector).text.strip()
     price = good.find(class_=price_selector).find(class_="goods-tile__price-value").text.strip().replace(" ", "")
     img_path = good.find(class_=img_selector).find("img").get("src").strip()
+    disabled = good.get("class") == "goods-tile_state_disabled"
 
     return {
         "id": id_,
         "title": title,
         "price": price,
         "img_path": img_path,
-        "currency": "UAH"
+        "currency": "UAH",
+        "active": not disabled
     }
 
 
@@ -82,7 +84,8 @@ def save_goods_into_csv(goods, csv_file_path=local_csv_file):
                 "Title",
                 "Price",
                 "Image",
-                "Currency"
+                "Currency",
+                "Active"
             )
         )
 
@@ -97,6 +100,7 @@ def save_goods_into_csv(goods, csv_file_path=local_csv_file):
                     good_parsed['price'],
                     good_parsed['img_path'],
                     good_parsed['currency'],
+                    good_parsed['active'],
                 )
             )
 
@@ -104,4 +108,3 @@ def save_goods_into_csv(goods, csv_file_path=local_csv_file):
 def scrape_html_to_csv(html=local_html_file):
     goods = scrape_saved_html(html)
     save_goods_into_csv(goods)
-
