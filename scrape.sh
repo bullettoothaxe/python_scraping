@@ -1,1 +1,1 @@
- python scraping.py
+ python main.py

@@ -105,7 +105,3 @@ def scrape_html_to_csv(html=local_html_file):
     goods = scrape_saved_html(html)
     save_goods_into_csv(goods)
 
-
-clone_resource_to_local_html()
-scrape_html_to_json()
-scrape_html_to_csv()
